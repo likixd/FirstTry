@@ -3,9 +3,10 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
+import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
-public class FirstTest {
+public class FirstTestMiniForm {
 
 
     @BeforeAll
@@ -19,30 +20,30 @@ public class FirstTest {
         open("https://qa-guru.github.io/one-page-form/text-box.html");
 
         $("[id=userName]").setValue("Rimma");
-        $("[id=userEmail]").setValue("wow@bk.ru");
+        $("[id=userEmail]").setValue("test@qagu.ru");
         $("[id=currentAddress]").setValue("test 123");
         $("[id=permanentAddress]").setValue("test 456,.789!");
         $("[id=submit]").click();
 
+        $x("//div[@id='output']").shouldBe(visible);
         $("[id=output] [id=name]").shouldHave(text("Rimma"));
-        $("[id=output] [id=email]").shouldHave(text("wow@bk.ru"));
+        $("[id=output] [id=email]").shouldHave(text("test@qagu.ru"));
         $("[id=output] [id=currentAddress]").shouldHave(text("test 123"));
         $("[id=output] [id=permanentAddress]").shouldHave(text("test 456,.789!"));
+        sleep(5000);
     }
 
-//    @Test
-//    void negativeTestNullName() {
-//        open("https://qa-guru.github.io/one-page-form/text-box.html");
-//
-//        //$("[id=userName]").setValue("Rimma");
-//        $("[id=userEmail]").setValue("wow@bk.ru");
-//        $("[id=currentAddress]").setValue("test 123");
-//        $("[id=permanentAddress]").setValue("test 456,.789!");
-//        $("[id=submit]").click();
-//
-//        $("[id=output] [id=name]").shouldHave(text("Rimma"));
-//        $("[id=output] [id=email]").shouldHave(text("wow@bk.ru"));
-//        $("[id=output] [id=currentAddress]").shouldHave(text("test 123"));
-//        $("[id=output] [id=permanentAddress]").shouldHave(text("test 456,.789!"));
-//    }
+    @Test
+    void negativeIncorrectEmail() {
+        open("https://qa-guru.github.io/one-page-form/text-box.html");
+
+        $("[id=userName]").setValue("Rimma");
+        $("[id=userEmail]").setValue("testqa");
+        $("[id=submit]").click();
+
+        $x("//div[@id='output']").shouldNotBe(visible);
+        sleep(5000);
+    }
+
+
 }
