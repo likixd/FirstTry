@@ -1,9 +1,11 @@
 import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
+import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class FirstTestMiniForm {
@@ -11,37 +13,42 @@ public class FirstTestMiniForm {
 
     @BeforeAll
     static void beforeAll(){
-        Configuration.browserSize= "1920x1080";
+        browserSize= "1920x1080";
+        baseUrl = "https://qa-guru.github.io";
     }
-
+//оставила для себя, закомментировала потому что запускаться с ним не нравится, так как сайт открывается через раз
+//    @AfterEach
+//    void afterAll() {
+//        closeWebDriver();
+//    }
 
     @Test
     void successfulRegistration() {
-        open("https://qa-guru.github.io/one-page-form/text-box.html");
+        open("/one-page-form/text-box");
 
-        $("[id=userName]").setValue("Rimma");
-        $("[id=userEmail]").setValue("test@qagu.ru");
-        $("[id=currentAddress]").setValue("test 123");
-        $("[id=permanentAddress]").setValue("test 456,.789!");
-        $("[id=submit]").click();
+        $("#userName").setValue("Rimma");
+        $("#userEmail").setValue("test@qagu.ru");
+        $("#currentAddress").setValue("test 123");
+        $("#permanentAddress").setValue("test 456,.789!");
+        $("#submit").click();
 
-        $x("//div[@id='output']").shouldBe(visible);
-        $("[id=output] [id=name]").shouldHave(text("Rimma"));
-        $("[id=output] [id=email]").shouldHave(text("test@qagu.ru"));
-        $("[id=output] [id=currentAddress]").shouldHave(text("test 123"));
-        $("[id=output] [id=permanentAddress]").shouldHave(text("test 456,.789!"));
+        $("#output").shouldBe(visible);
+        $("#output #name").shouldHave(text("Rimma"));
+        $("#output #email").shouldHave(text("test@qagu.ru"));
+        $("#output #currentAddress").shouldHave(text("test 123"));
+        $("#output #permanentAddress").shouldHave(text("test 456,.789!"));
         sleep(5000);
     }
 
     @Test
     void negativeIncorrectEmail() {
-        open("https://qa-guru.github.io/one-page-form/text-box.html");
+        open("/one-page-form/text-box");
 
-        $("[id=userName]").setValue("Rimma");
-        $("[id=userEmail]").setValue("testqa");
-        $("[id=submit]").click();
+        $("#userName").setValue("Rimma");
+        $("#userEmail").setValue("testqa");
+        $("#submit").click();
 
-        $x("//div[@id='output']").shouldNotBe(visible);
+        $("#output").shouldNotBe(visible);
         sleep(5000);
     }
 
