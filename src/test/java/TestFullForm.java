@@ -10,6 +10,7 @@ import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
+import static testdata.TestData.*;
 
 public class TestFullForm {
 
@@ -28,60 +29,60 @@ public class TestFullForm {
     void successfullRegistrationFull() {
         open("/automation-practice-form");
 
-        $("#firstName").setValue("Rimma");
-        $("#lastName").setValue("Giza");
-        $("#userEmail").setValue("test@test.ru");
-        $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("1234567890");
+        $("#firstName").setValue(userName);
+        $("#lastName").setValue(lastName);
+        $("#userEmail").setValue(userEmail);
+        $("#genterWrapper").$(byText(gender)).click();
+        $("#userNumber").setValue(userNumber);
 
         $("#dateOfBirthInput").click();
-        $ (".react-datepicker__month-select").selectOptionByValue("1");
-        $ (".react-datepicker__year-select").selectOption("1991");
-        $$(".react-datepicker__day:not(.react-datepicker__day--outside-month)").findBy(text("6")).click();
+        $ (".react-datepicker__year-select").selectOption(dateOfBirthYear);
+        $ (".react-datepicker__month-select").selectOptionByValue(dateOfBirthMonth);
+        $$(".react-datepicker__day:not(.react-datepicker__day--outside-month)").findBy(text(dateOfBirthDate)).click();
 
-        $("#hobbiesWrapper").$(byText("Reading")).click();
+        $("#hobbiesWrapper").$(byText(hobbies)).click();
 
-        $("#uploadPicture").uploadFromClasspath("1.png");
+        $("#uploadPicture").uploadFromClasspath(uploadPicture);
 
-        $("#currentAddress").setValue("Moscow never sleeps");
-        $("#subjectsInput").setValue("Computer Science").pressEnter();
+        $("#currentAddress").setValue(currentAddress);
+        $("#subjectsInput").setValue(subjectsInput).pressEnter();
         sleep(5000);
 
         $("#state").scrollTo().click();
-        $("#stateCity-wrapper").$(byText("Haryana")).click();
+        $("#stateCity-wrapper").$(byText(state)).click();
         $("#city").click();
-        $("#stateCity-wrapper").$(byText("Panipat")).click();
+        $("#stateCity-wrapper").$(byText(city)).click();
 
         $("#submit").scrollTo().click();
         sleep(6000);
 
         //Проверки в итоговой таблице
         $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Rimma Giza"));
-        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text("test@test.ru"));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Female"));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("1234567890"));
-        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("06 February,1991"));
-        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text("Computer Science"));
-        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text("Reading"));
-        $(".table-responsive").$(byText("Address")).parent().shouldHave(text("Moscow never sleeps"));
-        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text("1.png"));
-        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text("Haryana Panipat"));
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(userName + " " + lastName));
+        $(".table-responsive").$(byText("Student Email")).parent().shouldHave(text(userEmail));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(gender));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
+        $(".table-responsive").$(byText("Date of Birth")).parent().shouldHave(text("0" + dateOfBirthDate + " " + dateOfBirthMonthLetters + "," + dateOfBirthYear));
+        $(".table-responsive").$(byText("Subjects")).parent().shouldHave(text(subjectsInput));
+        $(".table-responsive").$(byText("Hobbies")).parent().shouldHave(text(hobbies));
+        $(".table-responsive").$(byText("Address")).parent().shouldHave(text(currentAddress));
+        $(".table-responsive").$(byText("Picture")).parent().shouldHave(text(uploadPicture));
+        $(".table-responsive").$(byText("State and City")).parent().shouldHave(text(state + " " + city));
 
     }
     @Test
     void requiredFieldsSucess(){
         open("/automation-practice-form");
 
-        $("#firstName").setValue("Rimma");
-        $("#lastName").setValue("Giza");
-        $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("1234567890");
+        $("#firstName").setValue(userName);
+        $("#lastName").setValue(lastName);
+        $("#genterWrapper").$(byText(gender)).click();
+        $("#userNumber").setValue(userNumber);
         $("#submit").scrollTo().click();
 
-        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text("Rimma Giza"));
-        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text("Female"));
-        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text("1234567890"));
+        $(".table-responsive").$(byText("Student Name")).parent().shouldHave(text(userName + " " + lastName));
+        $(".table-responsive").$(byText("Gender")).parent().shouldHave(text(gender));
+        $(".table-responsive").$(byText("Mobile")).parent().shouldHave(text(userNumber));
         sleep(5000);
     }
 
@@ -97,10 +98,10 @@ public class TestFullForm {
     void negativeIncorrectPhone(){
         open("/automation-practice-form");
 
-        $("#firstName").setValue("Rimma");
-        $("#lastName").setValue("Giza");
-        $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("123456789");
+        $("#firstName").setValue(userName);
+        $("#lastName").setValue(lastName);
+        $("#genterWrapper").$(byText(gender)).click();
+        $("#userNumber").setValue(incorrectUserNumber);
         $("#submit").scrollTo().click();
         $("#example-modal-sizes-title-lg").shouldNotBe(visible);
         sleep(5000);
@@ -110,9 +111,9 @@ public class TestFullForm {
     void negativeEmptyGender(){
         open("/automation-practice-form");
 
-        $("#firstName").setValue("Rimma");
-        $("#lastName").setValue("Giza");
-        $("#userNumber").setValue("1234567890");
+        $("#firstName").setValue(userName);
+        $("#lastName").setValue(lastName);
+        $("#userNumber").setValue(userNumber);
         $("#submit").scrollTo().click();
         $("#example-modal-sizes-title-lg").shouldNotBe(visible);
         sleep(5000);
@@ -122,9 +123,9 @@ public class TestFullForm {
     void negativeEmptyLastName(){
         open("/automation-practice-form");
 
-        $("#firstName").setValue("Rimma");
-        $("#genterWrapper").$(byText("Female")).click();
-        $("#userNumber").setValue("1234567890");
+        $("#firstName").setValue(userName);
+        $("#genterWrapper").$(byText(gender)).click();
+        $("#userNumber").setValue(userNumber);
         $("#submit").scrollTo().click();
         $("#example-modal-sizes-title-lg").shouldNotBe(visible);
         sleep(5000);

@@ -7,6 +7,7 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Configuration.*;
 import static com.codeborne.selenide.Selenide.*;
+import static testdata.TestData.*;
 
 public class FirstTestMiniForm {
 
@@ -26,17 +27,17 @@ public class FirstTestMiniForm {
     void successfulRegistration() {
         open("/one-page-form/text-box");
 
-        $("#userName").setValue("Rimma");
-        $("#userEmail").setValue("test@qagu.ru");
-        $("#currentAddress").setValue("test 123");
-        $("#permanentAddress").setValue("test 456,.789!");
+        $("#userName").setValue(userName);
+        $("#userEmail").setValue(userEmail);
+        $("#currentAddress").setValue(currentAddress);
+        $("#permanentAddress").setValue(permanentAddress);
         $("#submit").click();
 
         $("#output").shouldBe(visible);
-        $("#output #name").shouldHave(text("Rimma"));
-        $("#output #email").shouldHave(text("test@qagu.ru"));
-        $("#output #currentAddress").shouldHave(text("test 123"));
-        $("#output #permanentAddress").shouldHave(text("test 456,.789!"));
+        $("#output #name").shouldHave(text(userName));
+        $("#output #email").shouldHave(text(userEmail));
+        $("#output #currentAddress").shouldHave(text(currentAddress));
+        $("#output #permanentAddress").shouldHave(text(permanentAddress));
         sleep(5000);
     }
 
@@ -44,8 +45,8 @@ public class FirstTestMiniForm {
     void negativeIncorrectEmail() {
         open("/one-page-form/text-box");
 
-        $("#userName").setValue("Rimma");
-        $("#userEmail").setValue("testqa");
+        $("#userName").setValue(userName);
+        $("#userEmail").setValue(incorrectUserEmail);
         $("#submit").click();
 
         $("#output").shouldNotBe(visible);
