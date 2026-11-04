@@ -11,7 +11,7 @@ public class TestData {
     public static String gender = "Female";
     public static String userNumber = "1234567890" ;
     public static String incorrectUserNumber = "123456789";
-    public static String dateOfBirthDate = "1";
+    public static String dateOfBirthDate = "11";
     public static String dateOfBirthMonth = "1";
     public static String dateOfBirthMonthLetters = "February";
     public static String dateOfBirthYear = "1993";
@@ -20,6 +20,7 @@ public class TestData {
     public static String uploadPicture = "1.png";
     public static String state = "Haryana";
     public static String city = "Panipat";
+    public static String modalTitleText = "Thanks for submitting the form";
 
 
 }
