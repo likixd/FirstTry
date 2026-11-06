@@ -2,11 +2,9 @@ package pages;
 
 import com.codeborne.selenide.SelenideElement;
 import pages.components.CalendarComponent;
-
-import java.util.Calendar;
+import pages.components.RegistrationTableComponent;
 
 import static com.codeborne.selenide.Condition.*;
-import static com.codeborne.selenide.Selectors.byId;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
@@ -15,23 +13,23 @@ import static testdata.TestData.*;
 public class RegistrationPage {
     //Elements
     CalendarComponent calendar = new CalendarComponent();
-    private SelenideElement firstNameInput = $("#firstName");
-    private SelenideElement lastNameInput = $("#lastName");
-    private SelenideElement userEmailInput = $("#userEmail");
-    private SelenideElement genderContainer = $("#genterWrapper");
-    private SelenideElement userNumberInput = $("#userNumber");
-    private SelenideElement userSubjectInput = $("#subjectsInput");
-    private SelenideElement hobbiesContainer = $("#hobbiesWrapper");
-    private SelenideElement uploadContainer = $("#uploadPicture");
-    private SelenideElement currentAddressInput = $("#currentAddress");
-    private SelenideElement stateSelect = $("#state");
-    private SelenideElement citySelect = $("#city");
-    private SelenideElement stateCityContainer = $("#stateCity-wrapper");
-    private SelenideElement submitButton = $("#submit");
-    private SelenideElement outputTableResults = $(".table-responsive");
-    private SelenideElement modalDialog = $(".modal-dialog");
-    private SelenideElement modalTitle = $("#example-modal-sizes-title-lg");
-
+    //ResultTableComponent resultTable = new ResultTableComponent();
+    RegistrationTableComponent outputTableResults = new RegistrationTableComponent();
+    private final SelenideElement firstNameInput = $("#firstName");
+    private final SelenideElement lastNameInput = $("#lastName");
+    private final SelenideElement userEmailInput = $("#userEmail");
+    private final SelenideElement genderContainer = $("#genterWrapper");
+    private final SelenideElement userNumberInput = $("#userNumber");
+    private final SelenideElement userSubjectInput = $("#subjectsInput");
+    private final SelenideElement hobbiesContainer = $("#hobbiesWrapper");
+    private final SelenideElement uploadContainer = $("#uploadPicture");
+    private final SelenideElement currentAddressInput = $("#currentAddress");
+    private final SelenideElement stateSelect = $("#state");
+    private final SelenideElement citySelect = $("#city");
+    private final SelenideElement stateCityContainer = $("#stateCity-wrapper");
+    private final SelenideElement submitButton = $("#submit");
+    private final SelenideElement modalTitle = $("#example-modal-sizes-title-lg");
+    private final SelenideElement modalDialog = $(".modal-dialog");
 
 
     //Actions
@@ -41,38 +39,38 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage typeFirstName () {
-        firstNameInput.setValue(userName);
+    public RegistrationPage typeFirstName (String value) {
+        firstNameInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage typeLastName () {
-        lastNameInput.setValue(lastName);
+    public RegistrationPage typeLastName (String value) {
+        lastNameInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage typeUserEmail () {
-        userEmailInput.setValue(userEmail);
+    public RegistrationPage typeUserEmail (String value) {
+        userEmailInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage setGender () {
-        genderContainer.$(byText(gender)).click();
+    public RegistrationPage setGender (String value) {
+        genderContainer.$(byText(value)).click();
 
         return this;
     }
 
-    public RegistrationPage setDateOfBirth() {
+    public RegistrationPage setDateOfBirth(String date, String month, String year) {
         $("#dateOfBirthInput").click();
-        calendar.setDate(dateOfBirthDate, dateOfBirthMonth, dateOfBirthYear);
+        calendar.setDate(date, month, year);
         return this;
     }
 
-    public RegistrationPage typeUserNumber () {
-        userNumberInput.setValue(userNumber);
+    public RegistrationPage typeUserNumber (String value) {
+        userNumberInput.setValue(value);
 
         return this;
     }
@@ -83,47 +81,47 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage setSubject () {
-        userSubjectInput.setValue(subjectsInput).pressEnter();
+    public RegistrationPage setSubject (String value) {
+        userSubjectInput.setValue(value).pressEnter();
 
         return this;
     }
 
-    public RegistrationPage uploadFile () {
-        uploadContainer.uploadFromClasspath(uploadPicture);
+    public RegistrationPage uploadFile (String value) {
+        uploadContainer.uploadFromClasspath(value);
 
         return this;
     }
 
-    public RegistrationPage typeCurrentAddress () {
-        currentAddressInput.setValue(currentAddress);
+    public RegistrationPage typeCurrentAddress (String value) {
+        currentAddressInput.setValue(value);
 
         return this;
     }
 
-    public RegistrationPage setHobbies () {
-        hobbiesContainer.$(byText(hobbies)).click();
+    public RegistrationPage setHobbies (String value) {
+        hobbiesContainer.$(byText(value)).click();
 
         return this;
     }
 
-    public RegistrationPage setState () {
+    public RegistrationPage setState (String value) {
         stateSelect.scrollTo().click();
-        stateCityContainer.$(byText(state)).click();
+        stateCityContainer.$(byText(value)).click();
 
         return this;
     }
 
-    public RegistrationPage setCity () {
+    public RegistrationPage setCity (String value) {
         citySelect.click();
-        stateCityContainer.$(byText(city)).click();
+        stateCityContainer.$(byText(value)).click();
 
         return this;
     }
 
-    public RegistrationPage setStateAndCity () {
-        setState();
-        setCity();
+    public RegistrationPage setStateAndCity (String state, String city) {
+        setState(state);
+        setCity(city);
 
         return this;
     }
@@ -135,9 +133,9 @@ public class RegistrationPage {
         return this;
     }
 
-    public RegistrationPage checkModalOpen() {
+    public RegistrationPage checkModalOpen(String value) {
         modalDialog.should(appear);
-        modalTitle.shouldHave(text(modalTitleText));
+        modalTitle.shouldHave(text(value));
 
         return this;
     }
@@ -149,8 +147,7 @@ public class RegistrationPage {
     }
 
     public RegistrationPage checkField(String key, String value) {
-        outputTableResults.$(byText(key)).parent().shouldHave(text(value));
-
+        outputTableResults.checkField(key, value);
         return this;
     }
 

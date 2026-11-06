@@ -23,10 +23,10 @@ public class TextBoxTests { //extends TestBase???
     @Test
     void successfulRegistration() {
         textBoxPage.openPage()
-                .typeUserName()
-                .typeUserEmail()
-                .typeUserCurrentAddress()
-                .typeUserPermanentAddress()
+                .typeUserName(userName)
+                .typeUserEmail(userEmail)
+                .typeUserCurrentAddress(currentAddress)
+                .typeUserPermanentAddress(permanentAddress)
                 .submitForm()
                 .checkField("name", userName)
                 .checkField("email", userEmail)
@@ -34,14 +34,15 @@ public class TextBoxTests { //extends TestBase???
                 .checkField("permanentAddress", permanentAddress);
     }
 
-    @Test
-    void negativeIncorrectEmail() {
-
-        textBoxPage.openPage()
-                .typeIncorrectUserEmail()
-                .submitForm()
-                .checkNegative();
-    }
+    // этот тест в корне неверный, проверки тут нет на этой форме, хоть что туда пиши, всё равно, даже все пустые поля
+//    @Test
+//    void negativeIncorrectEmail() {
+//
+//        textBoxPage.openPage()
+//                .typeIncorrectUserEmail()
+//                .submitForm()
+//                .checkNegative();
+//    }
 
 //    @Test
 //    void successfulRegistration_old() {

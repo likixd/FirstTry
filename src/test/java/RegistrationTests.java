@@ -25,19 +25,20 @@ public class RegistrationTests {
     void successfullRegistrationFull() {
 
         registrationPage.openPage()
-                .typeFirstName()
-                .typeLastName()
-                .typeUserEmail()
-                .setGender()
-                .typeUserNumber()
-                .setDateOfBirth()
-                .setSubject()
-                .setHobbies()
-                .uploadFile()
-                .typeCurrentAddress()
-                .setStateAndCity()
-                .submitForm()
-                .checkModalOpen()
+                .typeFirstName(userName)
+                .typeLastName(lastName)
+                .typeUserEmail(userEmail)
+                .setGender(gender)
+                .typeUserNumber(userNumber)
+                .setDateOfBirth(dateOfBirthDate, dateOfBirthMonth, dateOfBirthYear)
+                .setSubject(subjectsInput)
+                .setHobbies(hobbies)
+                .uploadFile(uploadPicture)
+                .typeCurrentAddress(currentAddress)
+                .setStateAndCity(state, city)
+                .submitForm();
+
+        registrationPage.checkModalOpen(modalTitleText)
                 .checkField("Student Name", userName + " " + lastName)
                 .checkField("Student Email", userEmail)
                 .checkField("Gender", gender)
@@ -55,12 +56,12 @@ public class RegistrationTests {
     @DisplayName("Успешная регистрация REQUIRED")
     void requiredFieldsSucess(){
         registrationPage.openPage()
-                .typeFirstName()
-                .typeLastName()
-                .setGender()
-                .typeUserNumber()
+                .typeFirstName(userName)
+                .typeLastName(lastName)
+                .setGender(gender)
+                .typeUserNumber(userNumber)
                 .submitForm()
-                .checkModalOpen()
+                .checkModalOpen(modalTitleText)
                 .checkField("Student Name", userName + " " + lastName)
                 .checkField("Gender", gender)
                 .checkField("Mobile", userNumber);
@@ -78,9 +79,9 @@ public class RegistrationTests {
     @DisplayName("Негативный тест. Некорректный телефон")
     void negativeIncorrectPhone(){
         registrationPage.openPage()
-                .typeLastName()
-                .typeFirstName()
-                .setGender()
+                .typeLastName(lastName)
+                .typeFirstName(userName)
+                .setGender(gender)
                 .typeIncorrectUserNumber()
                 .submitForm()
                 .checkNegative();
@@ -90,9 +91,9 @@ public class RegistrationTests {
     @DisplayName("Негативный тест. Не выбран пол")
     void negativeEmptyGender(){
         registrationPage.openPage()
-                .typeFirstName()
-                .typeLastName()
-                .typeUserNumber()
+                .typeFirstName(userName)
+                .typeLastName(lastName)
+                .typeUserNumber(userNumber)
                 .submitForm()
                 .checkNegative();
    }
@@ -101,9 +102,9 @@ public class RegistrationTests {
   @DisplayName("Негативный тест. Не введена фамилия")
     void negativeEmptyLastName(){
       registrationPage.openPage()
-              .typeFirstName()
-              .setGender()
-              .typeUserNumber()
+              .typeFirstName(userName)
+              .setGender(gender)
+              .typeUserNumber(userNumber)
               .submitForm()
               .checkNegative();
   }
