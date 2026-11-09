@@ -1,13 +1,20 @@
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import static com.codeborne.selenide.Configuration.*;
+import static com.codeborne.selenide.Selenide.sleep;
 import static testdata.TestData.*;
+import static utils.RandomUtils.*;
+import com.github.javafaker.Faker;
+import java.util.Locale;
 
 public class RegistrationTests {
     RegistrationPage registrationPage = new RegistrationPage();
+    Faker fakerEn = new Faker();
+    Faker fakerRu = new Faker(new Locale("ru"));
 
     @BeforeAll
     static void beforeAll(){
@@ -19,6 +26,61 @@ public class RegistrationTests {
 //    void afterAll() {
 //        closeWebDriver();
 //    }
+
+    @Test
+    @DisplayName("Успешная регистрация FULL с FAKER")
+    void successfullRegistrationFull_withFaker() {
+
+        String userName = fakerRu.name().firstName();
+        String lastName = fakerRu.name().lastName();
+        String userEmail = getRandomEmail();
+        String gender = getRandomGender();
+        String currentAddress = fakerEn.address().fullAddress();
+        String userNumber = getRandomPhone();
+        String hobbies = getRandomHobby();
+        String subjects = getRandomSubjects();
+        String state = fakerEn.options().option(
+                STATE_AND_CITIES.keySet().toArray(new String[0]));
+        String city = fakerEn.options().option(
+                STATE_AND_CITIES.get(state));
+        String[] birthDate = generateBirthDate();
+        String dateOfBirthDate = birthDate[0];
+        String dateOfBirthMonth = birthDate[1];
+        String dateOfBirthYear = birthDate[2];
+
+
+        registrationPage.openPage()
+                .typeFirstName(userName)
+                .typeLastName(lastName)
+                .typeUserEmail(userEmail)
+                .setGender(gender)
+                .typeUserNumber(userNumber)
+                .setDateOfBirth(dateOfBirthDate, dateOfBirthMonth, dateOfBirthYear)
+                .setSubject(subjects)
+                .setHobbies(hobbies)
+                .uploadFile(uploadPicture)
+                .typeCurrentAddress(currentAddress)
+                .setStateAndCity(state, city)
+                .submitForm();
+        sleep(4000);
+
+        registrationPage.checkModalOpen(modalTitleText)
+                .checkField("Student Name", userName + " " + lastName)
+                .checkField("Student Email", userEmail)
+                .checkField("Gender", gender)
+                .checkField("Mobile", userNumber)
+                .checkField("Date of Birth", dateOfBirthDate + " " + dateOfBirthMonth + "," + dateOfBirthYear )
+                .checkField("Subjects", subjects)
+                .checkField("Hobbies", hobbies)
+                .checkField("Address", currentAddress)
+                .checkField("Picture", uploadPicture)
+                .checkField("State and City", state + " " + city );
+        sleep(4000);
+
+
+
+
+    }
 
     @Test
     @DisplayName("Успешная регистрация FULL")
