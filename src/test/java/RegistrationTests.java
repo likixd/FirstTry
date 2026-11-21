@@ -1,26 +1,27 @@
 import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
+import testdata.RandomizedTestData;
 import static com.codeborne.selenide.Configuration.*;
-import static com.codeborne.selenide.Selenide.sleep;
+//import static com.codeborne.selenide.Selenide.sleep;
 import static testdata.TestData.*;
-import static utils.RandomUtils.*;
-import com.github.javafaker.Faker;
-import java.util.Locale;
+
+
 
 public class RegistrationTests {
+
+    RandomizedTestData random_data = new RandomizedTestData();;
     RegistrationPage registrationPage = new RegistrationPage();
-    Faker fakerEn = new Faker();
-    Faker fakerRu = new Faker(new Locale("ru"));
+
 
     @BeforeAll
     static void beforeAll(){
         browserSize= "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
     }
+
 //оставила для себя, закомментировала потому что запускаться с ним не нравится, так как сайт открывается через раз
 //    @AfterEach
 //    void afterAll() {
@@ -31,55 +32,33 @@ public class RegistrationTests {
     @DisplayName("Успешная регистрация FULL с FAKER")
     void successfullRegistrationFull_withFaker() {
 
-        String userName = fakerRu.name().firstName();
-        String lastName = fakerRu.name().lastName();
-        String userEmail = getRandomEmail();
-        String gender = getRandomGender();
-        String currentAddress = fakerEn.address().fullAddress();
-        String userNumber = getRandomPhone();
-        String hobbies = getRandomHobby();
-        String subjects = getRandomSubjects();
-        String state = fakerEn.options().option(
-                STATE_AND_CITIES.keySet().toArray(new String[0]));
-        String city = fakerEn.options().option(
-                STATE_AND_CITIES.get(state));
-        String[] birthDate = generateBirthDate();
-        String dateOfBirthDate = birthDate[0];
-        String dateOfBirthMonth = birthDate[1];
-        String dateOfBirthYear = birthDate[2];
-
-
         registrationPage.openPage()
-                .typeFirstName(userName)
-                .typeLastName(lastName)
-                .typeUserEmail(userEmail)
-                .setGender(gender)
-                .typeUserNumber(userNumber)
-                .setDateOfBirth(dateOfBirthDate, dateOfBirthMonth, dateOfBirthYear)
-                .setSubject(subjects)
-                .setHobbies(hobbies)
+                .typeFirstName(random_data.firstName)
+                .typeLastName(random_data.lastName)
+                .typeUserEmail(random_data.userEmail)
+                .setGender(random_data.gender)
+                .typeUserNumber(random_data.userNumber)
+                .setDateOfBirth(random_data.dateOfBirthDate, random_data.dateOfBirthMonth, random_data.dateOfBirthYear)
+                .setSubject(random_data.subjects)
+                .setHobbies(random_data.hobbies)
                 .uploadFile(uploadPicture)
-                .typeCurrentAddress(currentAddress)
-                .setStateAndCity(state, city)
+                .typeCurrentAddress(random_data.currentAddress)
+                .setStateAndCity(random_data.state, random_data.city)
                 .submitForm();
-        sleep(4000);
+//        sleep(2000);
 
         registrationPage.checkModalOpen(modalTitleText)
-                .checkField("Student Name", userName + " " + lastName)
-                .checkField("Student Email", userEmail)
-                .checkField("Gender", gender)
-                .checkField("Mobile", userNumber)
-                .checkField("Date of Birth", dateOfBirthDate + " " + dateOfBirthMonth + "," + dateOfBirthYear )
-                .checkField("Subjects", subjects)
-                .checkField("Hobbies", hobbies)
-                .checkField("Address", currentAddress)
+                .checkField("Student Name", random_data.firstName + " " + random_data.lastName)
+                .checkField("Student Email", random_data.userEmail)
+                .checkField("Gender", random_data.gender)
+                .checkField("Mobile", random_data.userNumber)
+                .checkField("Date of Birth", random_data.dateOfBirthDate + " " + random_data.dateOfBirthMonth + "," + random_data.dateOfBirthYear )
+                .checkField("Subjects", random_data.subjects)
+                .checkField("Hobbies", random_data.hobbies)
+                .checkField("Address", random_data.currentAddress)
                 .checkField("Picture", uploadPicture)
-                .checkField("State and City", state + " " + city );
-        sleep(4000);
-
-
-
-
+                .checkField("State and City", random_data.state + " " + random_data.city );
+//        sleep(4000);
     }
 
     @Test

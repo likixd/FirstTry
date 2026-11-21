@@ -1,11 +1,8 @@
 package testdata;
 
-import com.github.javafaker.Faker;
-
-import java.util.Map;
-
 public class TestData {
 
+    //статические данные
     public static String userName = "Rimma";
     public static String userEmail = "test@qagu.ru";
     public static String currentAddress = "Moscow never sleeps 777";
@@ -26,13 +23,5 @@ public class TestData {
     public static String state = "Haryana";
     public static String city = "Panipat";
     public static String modalTitleText = "Thanks for submitting the form";
-
-    public static final Map<String, String[]> STATE_AND_CITIES = Map.of(
-            "NCR",           new String[]{"Delhi", "Gurgaon", "Noida"},
-            "Uttar Pradesh", new String[]{"Agra", "Lucknow", "Merrut"},
-            "Haryana",       new String[]{"Karnal", "Panipat"},
-            "Rajasthan",     new String[]{"Jaipur", "Jaiselmer"}
-    );
-
 
 }

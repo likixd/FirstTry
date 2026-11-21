@@ -1,18 +1,39 @@
 package utils;
-
 import com.github.javafaker.Faker;
-
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-
 import static java.lang.String.format;
 
 public class RandomUtils {
+
     static Faker faker = new Faker();
+    Faker fakerRu = new Faker(new Locale("ru"));
+
+
+    public String getFirstName() {
+        return fakerRu.name().firstName();
+    }
+
+    public String getLastName() {
+        return fakerRu.name().lastName();
+    }
+
+    public String getCurrentAddress() {
+        return faker.address().fullAddress();
+    }
+
+    public String getState() {
+        return faker.options().option(STATE_AND_CITIES.keySet().toArray(new String[0]));
+    }
+
+    public String getCity(String state) {
+        return faker.options().option(STATE_AND_CITIES.get(state));
+    }
+
 
 
     public static String getRandomGender () {
@@ -84,6 +105,13 @@ public class RandomUtils {
                 new SimpleDateFormat("yyyy", Locale.ENGLISH).format(date)   // [2] год: "2003"
         };
     }
+
+    public static final Map<String, String[]> STATE_AND_CITIES = Map.of(
+            "NCR",           new String[]{"Delhi", "Gurgaon", "Noida"},
+            "Uttar Pradesh", new String[]{"Agra", "Lucknow", "Merrut"},
+            "Haryana",       new String[]{"Karnal", "Panipat"},
+            "Rajasthan",     new String[]{"Jaipur", "Jaiselmer"}
+    );
 
 
 }
