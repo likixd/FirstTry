@@ -12,7 +12,7 @@ import static testdata.TestData.*;
 
 public class RegistrationTests {
 
-    RandomizedTestData random_data = new RandomizedTestData();;
+    RandomizedTestData randomData = new RandomizedTestData();;
     RegistrationPage registrationPage = new RegistrationPage();
 
 
@@ -33,31 +33,31 @@ public class RegistrationTests {
     void successfullRegistrationFull_withFaker() {
 
         registrationPage.openPage()
-                .typeFirstName(random_data.firstName)
-                .typeLastName(random_data.lastName)
-                .typeUserEmail(random_data.userEmail)
-                .setGender(random_data.gender)
-                .typeUserNumber(random_data.userNumber)
-                .setDateOfBirth(random_data.dateOfBirthDate, random_data.dateOfBirthMonth, random_data.dateOfBirthYear)
-                .setSubject(random_data.subjects)
-                .setHobbies(random_data.hobbies)
+                .typeFirstName(randomData.firstName)
+                .typeLastName(randomData.lastName)
+                .typeUserEmail(randomData.userEmail)
+                .setGender(randomData.gender)
+                .typeUserNumber(randomData.userNumber)
+                .setDateOfBirth(randomData.dateOfBirthDate, randomData.dateOfBirthMonth, randomData.dateOfBirthYear)
+                .setSubject(randomData.subjects)
+                .setHobbies(randomData.hobbies)
                 .uploadFile(uploadPicture)
-                .typeCurrentAddress(random_data.currentAddress)
-                .setStateAndCity(random_data.state, random_data.city)
+                .typeCurrentAddress(randomData.currentAddress)
+                .setStateAndCity(randomData.state, randomData.city)
                 .submitForm();
 //        sleep(2000);
 
         registrationPage.checkModalOpen(modalTitleText)
-                .checkField("Student Name", random_data.firstName + " " + random_data.lastName)
-                .checkField("Student Email", random_data.userEmail)
-                .checkField("Gender", random_data.gender)
-                .checkField("Mobile", random_data.userNumber)
-                .checkField("Date of Birth", random_data.dateOfBirthDate + " " + random_data.dateOfBirthMonth + "," + random_data.dateOfBirthYear )
-                .checkField("Subjects", random_data.subjects)
-                .checkField("Hobbies", random_data.hobbies)
-                .checkField("Address", random_data.currentAddress)
+                .checkField("Student Name", randomData.firstName + " " + randomData.lastName)
+                .checkField("Student Email", randomData.userEmail)
+                .checkField("Gender", randomData.gender)
+                .checkField("Mobile", randomData.userNumber)
+                .checkField("Date of Birth", randomData.dateOfBirthDate + " " + randomData.dateOfBirthMonth + "," + randomData.dateOfBirthYear )
+                .checkField("Subjects", randomData.subjects)
+                .checkField("Hobbies", randomData.hobbies)
+                .checkField("Address", randomData.currentAddress)
                 .checkField("Picture", uploadPicture)
-                .checkField("State and City", random_data.state + " " + random_data.city );
+                .checkField("State and City", randomData.state + " " + randomData.city );
 //        sleep(4000);
     }
 
