@@ -12,7 +12,7 @@ import static testdata.TestData.*;
 
 public class RegistrationTests {
 
-    RandomizedTestData randomData = new RandomizedTestData();;
+    RandomizedTestData randomData = new RandomizedTestData();
     RegistrationPage registrationPage = new RegistrationPage();
 
 
