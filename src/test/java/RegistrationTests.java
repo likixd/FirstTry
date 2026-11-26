@@ -27,7 +27,7 @@ public class RegistrationTests extends BaseTest {
 //    }
 
     @Test
-    @DisplayName("Успешная регистрация FULL с FAKER")
+    @DisplayName("Успешная регистрация FULL с генерацией случайных данных")
     void successfullRegistrationFull_withFaker() {
 
         registrationPage.openPage()
@@ -60,7 +60,7 @@ public class RegistrationTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Успешная регистрация FULL")
+    @DisplayName("Успешная регистрация FULL с заданными данными")
     void successfullRegistrationFull() {
 
         registrationPage.openPage()
@@ -69,7 +69,7 @@ public class RegistrationTests extends BaseTest {
                 .typeUserEmail(userEmail)
                 .setGender(gender)
                 .typeUserNumber(userNumber)
-                .setDateOfBirth(dateOfBirthDate, dateOfBirthMonth, dateOfBirthYear)
+                .setDateOfBirth(dateOfBirthDate, dateOfBirthMonthLetters, dateOfBirthYear)
                 .setSubject(subjectsInput)
                 .setHobbies(hobbies)
                 .uploadFile(uploadPicture)
