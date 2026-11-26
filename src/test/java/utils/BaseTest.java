@@ -12,6 +12,9 @@ public class BaseTest {
     static void beforeAll(){
         browserSize= "1920x1080";
         Configuration.baseUrl = "https://demoqa.com";
+//        Configuration.browser = "chrome";
+//        Configuration.browserVersion = "148.0";
+        Configuration.remote = "https://user1:1234@selenoid.qa.guru/wd/hub";
     }
 
     @AfterEach
