@@ -1,27 +1,25 @@
-import com.codeborne.selenide.Configuration;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import testdata.RandomizedTestData;
-import static com.codeborne.selenide.Configuration.*;
+import utils.BaseTest;
 //import static com.codeborne.selenide.Selenide.sleep;
 import static testdata.TestData.*;
 
 
 
-public class RegistrationTests {
+public class RegistrationTests extends BaseTest {
 
     RandomizedTestData randomData = new RandomizedTestData();
     RegistrationPage registrationPage = new RegistrationPage();
 
 
-    @BeforeAll
-    static void beforeAll(){
-        browserSize= "1920x1080";
-        Configuration.baseUrl = "https://demoqa.com";
-    }
-
+//    @BeforeAll
+//    static void beforeAll(){
+//        browserSize= "1920x1080";
+//        Configuration.baseUrl = "https://demoqa.com";
+//    }
+//
 //оставила для себя, закомментировала потому что запускаться с ним не нравится, так как сайт открывается через раз
 //    @AfterEach
 //    void afterAll() {
