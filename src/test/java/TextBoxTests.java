@@ -1,7 +1,6 @@
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
-import utils.BaseTest;
 
 import static com.codeborne.selenide.Configuration.*;
 import static testdata.TestData.*;
