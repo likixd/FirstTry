@@ -1,8 +1,10 @@
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import pages.TextBoxPage;
 
 import static com.codeborne.selenide.Configuration.*;
+import static com.codeborne.selenide.Selenide.closeWebDriver;
 import static testdata.TestData.*;
 
 public class TextBoxTests {
@@ -15,10 +17,10 @@ public class TextBoxTests {
         baseUrl = "https://qa-guru.github.io";
     }
 //оставила для себя, закомментировала потому что запускаться с ним не нравится, так как сайт открывается через раз
-//    @AfterEach
-//    void afterAll() {
-//        closeWebDriver();
-//    }
+    @AfterEach
+    void afterAll() {
+        closeWebDriver();
+    }
 
     @Test
     void successfulRegistration() {
