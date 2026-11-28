@@ -1,9 +1,12 @@
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.Owner;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pages.RegistrationPage;
 import testdata.RandomizedTestData;
 import utils.BaseTest;
-//import static com.codeborne.selenide.Selenide.sleep;
+import static io.qameta.allure.Allure.step;
 import static testdata.TestData.*;
 
 
@@ -14,49 +17,40 @@ public class RegistrationTests extends BaseTest {
     RegistrationPage registrationPage = new RegistrationPage();
 
 
-//    @BeforeAll
-//    static void beforeAll(){
-//        browserSize= "1920x1080";
-//        Configuration.baseUrl = "https://demoqa.com";
-//    }
-//
-//оставила для себя, закомментировала потому что запускаться с ним не нравится, так как сайт открывается через раз
-//    @AfterEach
-//    void afterAll() {
-//        closeWebDriver();
-//    }
-
     @Test
     @DisplayName("Успешная регистрация FULL с генерацией случайных данных")
+    @Owner("Gizatullina Rimma")
     void successfullRegistrationFull_withFaker() {
-
-        registrationPage.openPage()
-                .typeFirstName(randomData.firstName)
-                .typeLastName(randomData.lastName)
-                .typeUserEmail(randomData.userEmail)
-                .setGender(randomData.gender)
-                .typeUserNumber(randomData.userNumber)
-                .setDateOfBirth(randomData.dateOfBirthDate, randomData.dateOfBirthMonth, randomData.dateOfBirthYear)
-                .setSubject(randomData.subjects)
-                .setHobbies(randomData.hobbies)
-                .uploadFile(uploadPicture)
-                .typeCurrentAddress(randomData.currentAddress)
-                .setStateAndCity(randomData.state, randomData.city)
-                .submitForm();
-//        sleep(2000);
-
-        registrationPage.checkModalOpen(modalTitleText)
-                .checkField("Student Name", randomData.firstName + " " + randomData.lastName)
-                .checkField("Student Email", randomData.userEmail)
-                .checkField("Gender", randomData.gender)
-                .checkField("Mobile", randomData.userNumber)
-                .checkField("Date of Birth", randomData.dateOfBirthDate + " " + randomData.dateOfBirthMonth + "," + randomData.dateOfBirthYear )
-                .checkField("Subjects", randomData.subjects)
-                .checkField("Hobbies", randomData.hobbies)
-                .checkField("Address", randomData.currentAddress)
-                .checkField("Picture", uploadPicture)
-                .checkField("State and City", randomData.state + " " + randomData.city );
+        step("Open registration page", () ->
+            registrationPage.openPage());
+        step("Fill registration form", () -> {
+            registrationPage.typeFirstName(randomData.firstName)
+                    .typeLastName(randomData.lastName)
+                    .typeUserEmail(randomData.userEmail)
+                    .setGender(randomData.gender)
+                    .typeUserNumber(randomData.userNumber)
+                    .setDateOfBirth(randomData.dateOfBirthDate, randomData.dateOfBirthMonth, randomData.dateOfBirthYear)
+                    .setSubject(randomData.subjects)
+                    .setHobbies(randomData.hobbies)
+                    .uploadFile(uploadPicture)
+                    .typeCurrentAddress(randomData.currentAddress)
+                    .setStateAndCity(randomData.state, randomData.city)
+                    .submitForm();
+                });
+        step("Check registration form results",() -> {
+            registrationPage.checkModalOpen(modalTitleText)
+                    .checkField("Student Name", randomData.firstName + " " + randomData.lastName)
+                    .checkField("Student Email", randomData.userEmail)
+                    .checkField("Gender", randomData.gender)
+                    .checkField("Mobile", randomData.userNumber)
+                    .checkField("Date of Birth", randomData.dateOfBirthDate + " " + randomData.dateOfBirthMonth + "," + randomData.dateOfBirthYear)
+                    .checkField("Subjects", randomData.subjects)
+                    .checkField("Hobbies", randomData.hobbies)
+                    .checkField("Address", randomData.currentAddress)
+                    .checkField("Picture", uploadPicture)
+                    .checkField("State and City", randomData.state + " " + randomData.city);
 //        sleep(4000);
+        });
     }
 
     @Test
