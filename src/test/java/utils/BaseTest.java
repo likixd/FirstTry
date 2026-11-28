@@ -30,8 +30,8 @@ public class BaseTest {
 
         browserSize= "1920x1080";
         Configuration.browser = "chrome";
-        Configuration.browserVersion = "151.0";
-        Configuration.timeout = 15000;
+//        Configuration.browserVersion = "151.0";
+//        Configuration.timeout = 15000;
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--disable-dev-shm-usage", "--no-sandbox");
         chromeOptions.setCapability("se:cdpEnabled", false);
